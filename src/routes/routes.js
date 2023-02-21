@@ -8,7 +8,7 @@ const fs = require("fs");
 router.get("/mevBlock", async function (req, res, next) {
   try {
     const response = await axios.get(
-      `http://localhost:3000/zm_mev_transaction?block_number=lte.${req.query.block_number}`
+      `http://localhost:3000/zm_mev_transaction?block_number=eq.${req.query.block_number}`
     );
     const responseData = response.data;
     res.json(responseData);
