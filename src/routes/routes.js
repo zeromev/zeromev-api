@@ -8,10 +8,13 @@ const fs = require("fs");
 router.get("/mevBlock", async function (req, res, next) {
   try {
     let limit = "";
-    if (req.query.count) limit = `&limit=${req.query.count}`;
+    if (req.query.count)
+      limit = `block_number=gte.${req.query.block_number}&block_number=lte.${
+        parseInt(req.query.block_number) + parseInt(req.query.count)
+      }`;
+    else limit = `block_number=eq.${req.query.block_number}`;
     const response = await axios.get(
-      `http://localhost:3000/zm_mev_transaction?block_number=eq.${req.query.block_number}` +
-        limit
+      `http://localhost:3000/v_zm_mev_transaction?` + limit
     );
     const responseData = response.data;
     res.json(responseData);
