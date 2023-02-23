@@ -9,7 +9,7 @@ router.get("/mevBlock", async function (req, res, next) {
   try {
     let limit = "";
     if (req.query.count)
-      limit = `block_number=gte.${req.query.block_number}&block_number=lte.${
+      limit = `block_number=gte.${req.query.block_number}&block_number=lt.${
         parseInt(req.query.block_number) + parseInt(req.query.count)
       }`;
     else limit = `block_number=eq.${req.query.block_number}`;
