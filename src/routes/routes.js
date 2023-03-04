@@ -5,7 +5,7 @@ const path = require("path");
 const fs = require("fs");
 
 const offsetCalculator = (limit, offset) => {
-  return limit + offset;
+  return limit * (offset - 1);
 };
 /* GET A Single Block. */
 router.get("/mevBlock", async function (req, res, next) {
@@ -41,14 +41,13 @@ router.get("/mevTransactions", async function (req, res, next) {
   try {
     let offset = "";
     if (
-      req.query.page != undefined ||
-      req.query.page != null ||
-      req.query.page != 1
+      (req.query.page != undefined || req.query.page != null) &&
+      req.query.page != "1"
     )
       offset = `&offset=${offsetCalculator(10, parseInt(req.query.page))}`;
     else offset = `&offset=0`;
     const response = await axios.get(
-      `http://localhost:3000/v_zm_mev_transaction?select=tx_index,block_number&order=block_number&block_number=gte.${req.query.address_from}&limit=10` +
+      `http://localhost:3000/v_zm_mev_transaction?select=block_number,tx_index,address_from&order=block_number,tx_index&address_from=eq.'${req.query.address_from}'&limit=10` +
         offset
     );
     const responseData = response.data;
