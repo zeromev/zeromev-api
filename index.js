@@ -3,7 +3,8 @@ const express = require("express");
 const app = express();
 const path = require("path");
 
-const port = process.env.Port || 3000;
+require("dotenv").config();
+const port = process.env.Server_Port || 80;
 const router = require(path.join(__dirname, "./src/routes/routes"));
 
 app.use(express.json());
