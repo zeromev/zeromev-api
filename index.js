@@ -2,6 +2,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const cors = require("cors");
 
 require("dotenv").config();
 const port = process.env.Server_Port || 80;
@@ -13,6 +14,7 @@ app.use(
     extended: true,
   })
 );
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to API !!!" });
