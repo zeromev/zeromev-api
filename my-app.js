@@ -9,6 +9,9 @@ require("dotenv").config();
 const port = process.env.Server_Port || 80;
 const router = require(path.join(__dirname, "./src/routes/routes"));
 
+const swaggerUi = require("swagger-ui-express"),
+  swaggerDocument = require("./swagger.json");
+
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -30,6 +33,8 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({ message: err.message });
   return;
 });
+
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // app.listen(port, async () => {
 //   console.log(`API listening at http://localhost:${port}`);
