@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+"use strict";
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -30,6 +31,7 @@ app.use((err, req, res, next) => {
   return;
 });
 
-app.listen(port, async () => {
-  console.log(`API listening at http://localhost:${port}`);
-});
+// app.listen(port, async () => {
+//   console.log(`API listening at http://localhost:${port}`);
+// });
+module.exports = app;
