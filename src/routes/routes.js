@@ -16,11 +16,15 @@ router.get("/mevBlock", async function (req, res, next) {
     }
 
     let limit = "";
-    if (req.query.count)
+    if (req.query.count) {
+      if (parseInt(req.query.count) > 100) {
+        res.status(400).json({ err: "Count cannot be greater than 100" });
+        return;
+      }
       limit = `block_number=gte.${req.query.block_number}&block_number=lt.${
         parseInt(req.query.block_number) + parseInt(req.query.count)
       }`;
-    else limit = `block_number=eq.${req.query.block_number}`;
+    } else limit = `block_number=eq.${req.query.block_number}`;
     const response = await axios.get(
       `http://${ip}:${port}/v_zm_mev_transaction?` + limit
     );
@@ -48,7 +52,7 @@ router.get("/mevTransactions", async function (req, res, next) {
       offset = `&offset=${offsetCalculator(limit, parseInt(req.query.page))}`;
     else offset = `&offset=0`;
     const response = await axios.get(
-      `http://${ip}:${port}/v_zm_mev_transaction?select=block_number,tx_index,address_from&order=block_number,tx_index&address_from=eq.${req.query.address_from}&limit=${limit}` +
+      `http://${ip}:${port}/v_zm_mev_transaction?order=block_number,tx_index&address_from=eq.${req.query.address_from}&limit=${limit}` +
         offset
     );
     const responseData = response.data;
