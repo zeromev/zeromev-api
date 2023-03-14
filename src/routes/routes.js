@@ -40,14 +40,15 @@ router.get("/mevTransactions", async function (req, res, next) {
   }
   try {
     let offset = "";
+    const limit = 1000;
     if (
       (req.query.page != undefined || req.query.page != null) &&
       req.query.page != "1"
     )
-      offset = `&offset=${offsetCalculator(10, parseInt(req.query.page))}`;
+      offset = `&offset=${offsetCalculator(limit, parseInt(req.query.page))}`;
     else offset = `&offset=0`;
     const response = await axios.get(
-      `http://${ip}:${port}/v_zm_mev_transaction?select=block_number,tx_index,address_from&order=block_number,tx_index&address_from=eq.${req.query.address_from}&limit=10` +
+      `http://${ip}:${port}/v_zm_mev_transaction?select=block_number,tx_index,address_from&order=block_number,tx_index&address_from=eq.${req.query.address_from}&limit=${limit}` +
         offset
     );
     const responseData = response.data;
