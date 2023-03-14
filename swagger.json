@@ -3,12 +3,10 @@
   "info": {
     "title": "Zeromev API",
     "description": "The Zeromev API allows you to get transaction level MEV summary data for the Ethereum blockchain.",
+    "termsOfService": "https://info.zeromev.org/disclaimer",
     "contact": {
-      "email": "pmcgoohan@zeromev.org"
-    },
-    "license": {
-      "name": "Terms of service",
-      "url": "https://info.zeromev.org/disclaimer"
+      "name": "zeromev.org",
+      "url": "https://info.zeromev.org/about.html"
     },
     "version": "1.0.0"
   },
@@ -19,14 +17,14 @@
   ],
   "tags": [
     {
-      "name": "developers",
-      "description": "operations available to regular developers"
+      "name": "public",
+      "description": "unauthenticated operations available to the public"
     }
   ],
   "paths": {
     "/mevBlock": {
       "get": {
-        "tags": ["developers"],
+        "tags": ["public"],
         "summary": "returns MEV transactions for one or more blocks",
         "description": "returns all MEV related transactions for the passed block_number, or the number of blocks specified by count starting from block_number.",
         "operationId": "mevBlock",
@@ -83,7 +81,7 @@
     },
     "/mevTransactions": {
       "get": {
-        "tags": ["developers"],
+        "tags": ["public"],
         "summary": "returns MEV transactions by originating address",
         "description": "returns all MEV transactions originating from the passed Ethereum wallet address. Paginates every 1000 transactions.",
         "operationId": "mevTransactions",
@@ -162,7 +160,7 @@
           },
           "protocol": {
             "type": "string",
-            "description": "curve, unknown, uniswap2, zerox, bancor, uniswap3, balancer1, compoundv2, aave or multiple if several protocols were used in the transaction which cannot be differentiated",
+            "description": "swap protocol where relevant. curve, unknown, uniswap2, zerox, bancor, uniswap3, balancer1, compoundv2, aave or multiple if several protocols were used in the transaction which cannot be differentiated",
             "nullable": true,
             "example": "uniswap3"
           },
