@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to API !!!" });
 });
 
-app.use("/", router);
+app.use("/v1", router);
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {
