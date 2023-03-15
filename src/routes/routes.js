@@ -39,7 +39,7 @@ router.get("/mevBlock", async function (req, res, next) {
 /* GET A Single Transaction. */
 router.get("/mevTransactions", async function (req, res, next) {
   if (req.query.address_from == undefined || req.query.address_from == null) {
-    res.status(400).json({ err: "Block Number must be provided" });
+    res.status(400).json({ err: "Address must be provided" });
     return;
   }
   try {
@@ -52,7 +52,7 @@ router.get("/mevTransactions", async function (req, res, next) {
       offset = `&offset=${offsetCalculator(limit, parseInt(req.query.page))}`;
     else offset = `&offset=0`;
     const response = await axios.get(
-      `http://${ip}:${port}/v_zm_mev_transaction?order=block_number,tx_index&address_from=eq.${req.query.address_from}&limit=${limit}` +
+      `http://${ip}:${port}/v_zm_mev_transaction?order=block_number,tx_index&address_from=eq.${req.query.address_from.toLowerCase()}&limit=${limit}` +
         offset
     );
     const responseData = response.data;
