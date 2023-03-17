@@ -37,8 +37,8 @@
             "style": "form",
             "explode": true,
             "schema": {
-              "minimum": 0,
               "type": "integer",
+              "minimum": 0,
               "format": "int64",
               "example": 16824820
             }
@@ -106,7 +106,6 @@
             "style": "form",
             "explode": true,
             "schema": {
-              "maximum": 99999,
               "minimum": 1,
               "type": "integer",
               "format": "int32",
