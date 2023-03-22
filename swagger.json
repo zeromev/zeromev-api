@@ -24,7 +24,9 @@
   "paths": {
     "/mevBlock": {
       "get": {
-        "tags": ["public"],
+        "tags": [
+          "public"
+        ],
         "summary": "returns MEV transactions for one or more blocks",
         "description": "returns all MEV related transactions for the passed block_number, or the number of blocks specified by count starting from block_number.",
         "operationId": "mevBlock",
@@ -32,13 +34,13 @@
           {
             "name": "block_number",
             "in": "query",
-            "description": "the passed Ethereum block number to return MEV transactions for or from (if count is supplied)",
+            "description": "the passed Ethereum block number to return MEV transactions for or from (if count is supplied).",
             "required": true,
             "style": "form",
             "explode": true,
             "schema": {
-              "type": "integer",
               "minimum": 0,
+              "type": "integer",
               "format": "int64",
               "example": 16824820
             }
@@ -46,7 +48,7 @@
           {
             "name": "count",
             "in": "query",
-            "description": "the maximum number of blocks to return from block_number",
+            "description": "the maximum number of blocks to return from block_number (between 1 and 100).",
             "required": false,
             "style": "form",
             "explode": true,
@@ -81,7 +83,9 @@
     },
     "/mevTransactions": {
       "get": {
-        "tags": ["public"],
+        "tags": [
+          "public"
+        ],
         "summary": "returns MEV transactions by originating address",
         "description": "returns all MEV transactions originating from the passed Ethereum wallet address. Paginates every 1000 transactions.",
         "operationId": "mevTransactions",
@@ -89,7 +93,7 @@
           {
             "name": "address_from",
             "in": "query",
-            "description": "the passed Ethereum source address to return MEV transactions for",
+            "description": "the passed Ethereum source address to return MEV transactions for.",
             "required": true,
             "style": "form",
             "explode": true,
@@ -101,7 +105,7 @@
           {
             "name": "page",
             "in": "query",
-            "description": "allows pagination if there are more than 1000 rows returned, starting at page 1",
+            "description": "allows pagination if there are more than 1000 rows returned, starting at page 1.",
             "required": false,
             "style": "form",
             "explode": true,
@@ -137,7 +141,11 @@
   "components": {
     "schemas": {
       "mevTransaction": {
-        "required": ["block_number", "mev_type", "tx_index"],
+        "required": [
+          "block_number",
+          "mev_type",
+          "tx_index"
+        ],
         "type": "object",
         "properties": {
           "block_number": {
@@ -177,16 +185,16 @@
             "nullable": true,
             "example": 54.23
           },
-          "swap_volume_usd": {
+          "user_swap_volume_usd": {
             "type": "number",
-            "description": "the volume of swaps in the transaction in USD (where applicable)",
+            "description": "the volume of swaps in the transaction in USD (where applicable) less the extractor_swap_volume_usd",
             "format": "double",
             "nullable": true,
             "example": 1354.23
           },
-          "swap_count": {
+          "user_swap_count": {
             "type": "integer",
-            "description": "the number of swaps in the transaction (where applicable)",
+            "description": "the number of swaps in the transaction (where applicable) less the extractor_swap_count",
             "format": "int64",
             "nullable": true,
             "example": 2
