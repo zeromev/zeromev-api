@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Zeromev API",
-    "description": "The Zeromev API allows you to get transaction level MEV summary data for the Ethereum blockchain.",
+    "description": "The zeromev API allows you to get transaction level MEV summary data for the Ethereum blockchain.\n\nPlease read the [usage guide](https://info.zeromev.org/api.html) and [data sources & limitations](https://info.zeromev.org/sources.html) pages before using the API.\n",
     "termsOfService": "https://info.zeromev.org/disclaimer",
     "contact": {
       "name": "zeromev.org",
