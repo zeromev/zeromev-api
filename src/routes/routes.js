@@ -38,12 +38,19 @@ router.get("/mevBlock", async function (req, res, next) {
 
 /* GET A Single Transaction. */
 router.get("/mevTransactions", async function (req, res, next) {
-  if (req.query.address_from == undefined || req.query.address_from == null) {
-    res.status(400).json({ err: "Address must be provided" });
+  if (
+    (req.query.address_from == undefined || req.query.address_from == null) &&
+    (req.query.address_to == undefined || req.query.address_to == null)
+  ) {
+    res.status(400).json({
+      err: "Address must be provided. Either provide address_from, or address_to",
+    });
     return;
   }
   try {
-    let offset = "";
+    let offset = "",
+      addressFrom = "",
+      addressTo = "";
     const limit = 1000;
     if (
       (req.query.page != undefined || req.query.page != null) &&
@@ -51,9 +58,17 @@ router.get("/mevTransactions", async function (req, res, next) {
     )
       offset = `&offset=${offsetCalculator(limit, parseInt(req.query.page))}`;
     else offset = `&offset=0`;
+    if (req.query.address_from != undefined && req.query.address_from != null)
+      addressFrom = `&address_from=eq.${req.query.address_from.toLowerCase()}`;
+
+    if (req.query.address_to != undefined && req.query.address_to != null)
+      addressTo = `&address_to=eq.${req.query.address_to.toLowerCase()}`;
+
     const response = await axios.get(
-      `http://${ip}:${port}/v_zm_mev_transaction?order=block_number,tx_index&address_from=eq.${req.query.address_from.toLowerCase()}&limit=${limit}` +
-        offset
+      `http://${ip}:${port}/v_zm_mev_transaction?order=block_number,tx_index&limit=${limit}` +
+        offset +
+        addressFrom +
+        addressTo
     );
     const responseData = response.data;
     res.json(responseData);
@@ -65,13 +80,28 @@ router.get("/mevTransactions", async function (req, res, next) {
 
 /* GET Transaction Summary without Pagination. */
 router.get("/mevTransactionsSummary", async function (req, res, next) {
-  if (req.query.address_from == undefined || req.query.address_from == null) {
-    res.status(400).json({ err: "Address must be provided" });
+  let addressFrom = "",
+    addressTo = "";
+  if (
+    (req.query.address_from == undefined || req.query.address_from == null) &&
+    (req.query.address_to == undefined || req.query.address_to == null)
+  ) {
+    res.status(400).json({
+      err: "Address must be provided. Either provide address_from, or address_to",
+    });
     return;
   }
+  if (req.query.address_from != undefined && req.query.address_from != null)
+    addressFrom = `&address_from=eq.${req.query.address_from.toLowerCase()}`;
+
+  if (req.query.address_to != undefined && req.query.address_to != null)
+    addressTo = `&address_to=eq.${req.query.address_to.toLowerCase()}`;
+
   try {
     const response = await axios.get(
-      `http://${ip}:${port}/v_zm_mev_transaction_summary?select=mev_type,sum_user_loss_usd,sum_user_swap_volume_usd,sum_user_swap_count,sum_extractor_profit_usd,sum_extractor_swap_volume_usd,sum_extractor_swap_count&address_from=eq.${req.query.address_from.toLowerCase()}`
+      `http://${ip}:${port}/v_zm_mev_transaction_summary?select=mev_type,sum_user_loss_usd,sum_user_swap_volume_usd,sum_user_swap_count,sum_extractor_profit_usd,sum_extractor_swap_volume_usd,sum_extractor_swap_count` +
+        addressFrom +
+        addressTo
     );
     const responseData = response.data;
     res.json(responseData);
