@@ -136,6 +136,48 @@
           }
         }
       }
+    },
+    "/mevTransactionsSummary": {
+      "get": {
+        "tags": [
+          "public"
+        ],
+        "summary": "returns an MEV summary for the originating address",
+        "description": "returns a summary of MEV transactions originating from the passed Ethereum wallet address and split by MEV type.",
+        "operationId": "mevTransactionsSummary",
+        "parameters": [
+          {
+            "name": "address_from",
+            "in": "query",
+            "description": "the passed Ethereum source address to return the MEV summary for.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "example": "0x00356ce6250f8489d23ff32742256ab5be9dd8d7"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "MEV transactions matching criteria",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/mevTransactionSummary"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -162,7 +204,7 @@
           },
           "mev_type": {
             "type": "string",
-            "description": "the type of mev (sandwich, backrun, liquid, arb, frontrun, swap)",
+            "description": "the type of MEV (sandwich, backrun, liquid, arb, frontrun, swap)",
             "example": "frontrun"
           },
           "protocol": {
@@ -173,14 +215,14 @@
           },
           "user_loss_usd": {
             "type": "number",
-            "description": "estimated loss to user from the MEV in USD",
+            "description": "estimated loss to user from MEV in USD",
             "format": "double",
             "nullable": true,
             "example": -34.42
           },
           "extractor_profit_usd": {
             "type": "number",
-            "description": "estimated profit to the extractor from the MEV in USD",
+            "description": "estimated profit to the extractor from MEV in USD",
             "format": "double",
             "nullable": true,
             "example": 54.23
@@ -252,6 +294,58 @@
             "format": "date-time",
             "nullable": true,
             "example": "2023-03-03T11:52:19.444928Z"
+          }
+        }
+      },
+      "mevTransactionSummary": {
+        "required": [
+          "mev_type"
+        ],
+        "type": "object",
+        "properties": {
+          "mev_type": {
+            "type": "string",
+            "description": "the type of MEV (sandwich, swap)",
+            "example": "sandwich"
+          },
+          "sum_user_loss_usd": {
+            "type": "number",
+            "description": "total estimated loss to this account from MEV in USD",
+            "format": "double",
+            "nullable": true,
+            "example": -3434.42
+          },
+          "sum_user_swap_volume_usd": {
+            "type": "number",
+            "description": "total volume of swaps made by this account in USD (less any volume from extraction)",
+            "format": "double",
+            "nullable": true,
+            "example": 135423.23
+          },
+          "sum_user_swap_count": {
+            "type": "integer",
+            "description": "the number of swaps made by this account (less any volume from extraction)",
+            "format": "int64",
+            "nullable": true,
+            "example": 2
+          },
+          "sum_extractor_profit_usd": {
+            "type": "number",
+            "description": "total estimated profit made by this account from MEV in USD",
+            "format": "double",
+            "nullable": true
+          },
+          "sum_extractor_swap_volume_usd": {
+            "type": "number",
+            "description": "total volume of swaps made by this account in USD when extracting value",
+            "format": "double",
+            "nullable": true
+          },
+          "sum_extractor_swap_count": {
+            "type": "integer",
+            "description": "the total number of swaps made by this account when extracting value",
+            "format": "int64",
+            "nullable": true
           }
         }
       }

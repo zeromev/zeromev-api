@@ -62,4 +62,23 @@ router.get("/mevTransactions", async function (req, res, next) {
     next(err);
   }
 });
+
+/* GET Transaction Summary without Pagination. */
+router.get("/mevTransactionsSummary", async function (req, res, next) {
+  if (req.query.address_from == undefined || req.query.address_from == null) {
+    res.status(400).json({ err: "Address must be provided" });
+    return;
+  }
+  try {
+    const response = await axios.get(
+      `http://${ip}:${port}/v_zm_mev_transaction_summary?select=mev_type,sum_user_loss_usd,sum_user_swap_volume_usd,sum_user_swap_count,sum_extractor_profit_usd,sum_extractor_swap_volume_usd,sum_extractor_swap_count&address_from=eq.${req.query.address_from.toLowerCase()}`
+    );
+    const responseData = response.data;
+    res.json(responseData);
+  } catch (err) {
+    console.error(`Error while getting MevTransactionSummary `, err.message);
+    next(err);
+  }
+});
+
 module.exports = router;
