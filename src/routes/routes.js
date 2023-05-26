@@ -80,8 +80,7 @@ router.get("/mevTransactions", async function (req, res, next) {
 
 /* GET Transaction Summary without Pagination. */
 router.get("/mevTransactionsSummary", async function (req, res, next) {
-  let addressFrom = "",
-    addressTo = "";
+  let genReq = "";
   if (
     (req.query.address_from == undefined || req.query.address_from == null) &&
     (req.query.address_to == undefined || req.query.address_to == null)
@@ -91,17 +90,27 @@ router.get("/mevTransactionsSummary", async function (req, res, next) {
     });
     return;
   }
+  if (
+    (req.query.address_from != undefined || req.query.address_from != null) &&
+    (req.query.address_to != undefined || req.query.address_to != null)
+  ) {
+    res.status(400).json({
+      err: "Address from and to cannot be provided at the same time. Either provide address_from, or address_to not both",
+    });
+    return;
+  }
+  
+  const selectedCols = `select=mev_type,sum_user_loss_usd,sum_user_swap_volume_usd,sum_user_swap_count,sum_extractor_profit_usd,sum_extractor_swap_volume_usd,sum_extractor_swap_count`
+  
   if (req.query.address_from != undefined && req.query.address_from != null)
-    addressFrom = `&address_from=eq.${req.query.address_from.toLowerCase()}`;
+    genReq = `v_zm_mev_transaction_summary?${selectedCols}&address_from=eq.${req.query.address_from.toLowerCase()}`;
 
   if (req.query.address_to != undefined && req.query.address_to != null)
-    addressTo = `&address_to=eq.${req.query.address_to.toLowerCase()}`;
+    genReq = `v_zm_mev_transaction_summary_to?${selectedCols}&address_to=eq.${req.query.address_to.toLowerCase()}`;
 
   try {
     const response = await axios.get(
-      `http://${ip}:${port}/v_zm_mev_transaction_summary?select=mev_type,sum_user_loss_usd,sum_user_swap_volume_usd,sum_user_swap_count,sum_extractor_profit_usd,sum_extractor_swap_volume_usd,sum_extractor_swap_count` +
-        addressFrom +
-        addressTo
+      `http://${ip}:${port}/` + genReq
     );
     const responseData = response.data;
     res.json(responseData);
