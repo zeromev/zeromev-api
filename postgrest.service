@@ -1,0 +1,12 @@
+[Unit]
+Description=Postgrest Api Service
+After=postgresql.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/postgrest /etc/postgrest.conf
+ExecReload=/bin/kill -SIGUSR1 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
+
