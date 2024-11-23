@@ -1,8 +1,8 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
-const ip = process.env.IP || "localhost";
-const port = process.env.Port || 3000;
+const ip = process.env.POSTGREST_IP || "localhost";
+const port = process.env.POSTGREST_Port || 3000;
 
 const offsetCalculator = (limit, offset) => {
   return limit * (offset - 1);
@@ -99,9 +99,9 @@ router.get("/mevTransactionsSummary", async function (req, res, next) {
     });
     return;
   }
-  
-  const selectedCols = `select=mev_type,sum_user_loss_usd,sum_user_swap_volume_usd,sum_user_swap_count,sum_extractor_profit_usd,sum_extractor_swap_volume_usd,sum_extractor_swap_count`
-  
+
+  const selectedCols = `select=mev_type,sum_user_loss_usd,sum_user_swap_volume_usd,sum_user_swap_count,sum_extractor_profit_usd,sum_extractor_swap_volume_usd,sum_extractor_swap_count`;
+
   if (req.query.address_from != undefined && req.query.address_from != null)
     genReq = `v_zm_mev_transaction_summary?${selectedCols}&address_from=eq.${req.query.address_from.toLowerCase()}`;
 
@@ -109,9 +109,7 @@ router.get("/mevTransactionsSummary", async function (req, res, next) {
     genReq = `v_zm_mev_transaction_summary_to?${selectedCols}&address_to=eq.${req.query.address_to.toLowerCase()}`;
 
   try {
-    const response = await axios.get(
-      `http://${ip}:${port}/` + genReq
-    );
+    const response = await axios.get(`http://${ip}:${port}/` + genReq);
     const responseData = response.data;
     res.json(responseData);
   } catch (err) {

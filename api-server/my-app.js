@@ -7,7 +7,6 @@ const cors = require("cors");
 const fs = require("fs");
 
 require("dotenv").config();
-const port = process.env.Server_Port || 80;
 const router = require(path.join(__dirname, "./src/routes/routes"));
 
 const swaggerUi = require("swagger-ui-express"),
