@@ -1,0 +1,17 @@
+[Unit]
+Description=NodeJS Server For Rest API
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/opt/api-server
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node server.js
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=node-server
+
+[Install]
+WantedBy=multi-user.target
