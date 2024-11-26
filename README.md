@@ -31,7 +31,7 @@ Once the binary file, configuration file and service file are all place in relev
 ```bash
 sudo systemctl enable postgrest
 sudo systemctl start postgrest
-sudo systemctl status postgres
+sudo systemctl status postgrest
 ```
 
 If there are any errors that occur while starting, they should pop up on status command. Check for credentials mentioned in postgrest.conf file if they are correct or not.
