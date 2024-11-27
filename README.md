@@ -20,7 +20,7 @@ Postgresql Server should be up and running and accepting connections
 
 - Edit the postgrest.conf and update the postgres password (and database if needed)
 
-- Place the postgrest.conf file in etc directory on the server.
+- Place the postgrest.conf file in the /etc directory
 
 - Place the postgrest.service file in /etc/systemd/system directory
 
