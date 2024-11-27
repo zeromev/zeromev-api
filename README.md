@@ -48,7 +48,7 @@ NodeJS can be installed in different ways, either via package manager, or via de
 
 Download and Install nvm using its shell script from the link below.
 
-[NVM](https://github.com/nvm-sh/nvm)
+[NVM](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)
 
 Then run the following command once nvm is installed and loaded
 
