@@ -28,8 +28,8 @@ npm i
 - Now simply run the following commands to make sure APIs start and are working correctly.
 
 ```bash
-sudo systemctl start server
 sudo systemctl enable server
+sudo systemctl start server
 sudo systemctl status server
 ```
 
