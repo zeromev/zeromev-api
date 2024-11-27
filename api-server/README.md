@@ -16,7 +16,14 @@ sudo cp -r api-server /opt
 sudo cp server.service /etc/systemd/system
 ```
 
-- Now cd into the APIs folder and run the following command
+- Set permissions on the API folder
+
+```bash
+sudo chown -R $USER:$USER /opt/api-server
+sudo chmod -R 755 /opt/api-server
+```
+
+- Now cd into the API folder and run the following command
 
 ```bash
 cd /opt/api-server
