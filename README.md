@@ -18,13 +18,13 @@ Postgresql Server should be up and running and accepting connections
 
 ### Instructions
 
+- Edit the postgrest.conf and update the postgres password (and database if needed)
+
 - Place the postgrest.conf file in etc directory on the server.
 
 - Place the postgrest.service file in /etc/systemd/system directory
 
 - Place the **postgrest** binary in /usr/local/bin directory
-
-- Use this tutorial to create a user and give read-only access to that particular database/table so that when you start postgresT it can read the schema and loads its service. [Tutorial 0 - Get it Running](https://postgrest.org/en/stable/tutorials/tut0.html) **Step 4 Only Required**
 
 Once the binary file, configuration file and service file are all place in relevant directories. Run the following commands to enable and start the postgresT service.
 
