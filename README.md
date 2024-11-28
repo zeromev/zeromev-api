@@ -1,6 +1,6 @@
-# Repo for API Server
+# zeromev-api
 
-This repo contains details and files for how to run this API server.
+This repo contains details and files for how to run the zeromev API server.
 
 There are two main components for the API server to be used.
 
@@ -50,7 +50,7 @@ Download and Install Nodejs 21.7.2 using its tar script from the link below.
 
 [21.7.2](https://nodejs.org/dist/v21.7.2/node-v21.7.2-linux-x64.tar.gz)
 
-Run the following commands to downlaod and load it
+Run the following commands to download and load it
 
 ```bash
 wget https://nodejs.org/dist/v21.7.2/node-v21.7.2-linux-x64.tar.gz
