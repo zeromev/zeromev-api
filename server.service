@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 # Use User root or the user from which nvm installed nodejs
-User=zeromev
+User=root
 WorkingDirectory=/opt/api-server
 Environment=NODE_ENV=production
 ExecStart=/opt/node-v21.7.2-linux-x64/bin/node server.js

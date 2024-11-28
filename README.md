@@ -55,10 +55,11 @@ Run the following commands to downlaod and load it
 ```bash
 wget https://nodejs.org/dist/v21.7.2/node-v21.7.2-linux-x64.tar.gz
 tar -xf node-v21.7.2-linux-x64.tar.gz
-sudo mv node-v21.7.2-linux-x64 /opt/node-v21.7.2-linux-x64
+mv node-v21.7.2-linux-x64 /opt/node-v21.7.2-linux-x64
 rm node-v21.7.2-linux-x64.tar.gz
-export NODEJS_HOME=/opt/node-v21.7.2-linux-x64/bin
-export PATH=$NODEJS_HOME:$PATH
+echo "export NODEJS_HOME=/opt/node-v21.7.2-linux-x64/bin" >> ~/.bashrc
+echo "export PATH=$NODEJS_HOME:$PATH" >> ~/.bashrc
+source ~/.bashrc
 ```
 
 This will install node **v21.7.2** on server, which is what the Node APIs were built using.
@@ -70,7 +71,7 @@ node -v
 npm version
 ```
 
-Once Installed lets export this NodeJS installation so its available on VM for all users. 
+***Optional*** Once Installed lets export this NodeJS installation so its available on VM for all users. 
 ```bash
 # Run this for any user that wants to access the node installation
 echo "export NODEJS_HOME=/opt/node-v21.7.2-linux-x64/bin" >> ~/.bashrc
