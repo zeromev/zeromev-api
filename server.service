@@ -3,10 +3,11 @@ Description=NodeJS Server For Rest API
 After=network.target
 
 [Service]
-User=root
+# Use User root or the user from which nvm installed nodejs
+User=zeromev
 WorkingDirectory=/opt/api-server
 Environment=NODE_ENV=production
-ExecStart=/usr/bin/node server.js
+ExecStart=/opt/node-v21.7.2-linux-x64/bin/node server.js
 Restart=always
 RestartSec=10
 StandardOutput=syslog

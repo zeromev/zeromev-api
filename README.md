@@ -42,19 +42,23 @@ If there are any errors that occur while starting, they should pop up on status 
 
 Node APIs work as a wrapper on default postgresT APIs, instead of exposing PostgresT service directly over the internet it is run on local port only and accepts local connections only. And node APIs provide custom endpoints and more dynamic control over postgresT and hence are exposed over the internet. Underneath the Node APIs are local calls to postgrest service.
 
-NodeJS can be installed in different ways, either via package manager, or via default website download, via install.sh shell scripts. But the best way is to use Node Version Manager (nvm). NVM allows us to use more then one node version, and also is the easy to install and use the exact version required.
+NodeJS can be installed in different ways, either via package manager, or via default website download, via install.sh shell scripts. To make NodeJS available globally lets download the nodejs tar and install it systemwide. 
 
 ### Instructions
 
-Download and Install nvm using its shell script from the link below.
+Download and Install Nodejs 21.7.2 using its tar script from the link below.
 
-[NVM](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating)
+[21.7.2](https://nodejs.org/dist/v21.7.2/node-v21.7.2-linux-x64.tar.gz)
 
-Then run the following command once nvm is installed and loaded
+Run the following commands to downlaod and load it
 
 ```bash
-nvm install 21.7.2
-nvm use 21.7.2
+wget https://nodejs.org/dist/v21.7.2/node-v21.7.2-linux-x64.tar.gz
+tar -xf node-v21.7.2-linux-x64.tar.gz
+sudo mv node-v21.7.2-linux-x64 /opt/node-v21.7.2-linux-x64
+rm node-v21.7.2-linux-x64.tar.gz
+export NODEJS_HOME=/opt/node-v21.7.2-linux-x64/bin
+export PATH=$NODEJS_HOME:$PATH
 ```
 
 This will install node **v21.7.2** on server, which is what the Node APIs were built using.
@@ -63,6 +67,15 @@ To verify this run the following commands
 
 ```bash
 node -v
+npm version
+```
+
+Once Installed lets export this NodeJS installation so its available on VM for all users. 
+```bash
+# Run this for any user that wants to access the node installation
+echo "export NODEJS_HOME=/opt/node-v21.7.2-linux-x64/bin" >> ~/.bashrc
+echo "export PATH=$NODEJS_HOME:$PATH" >> ~/.bashrc
+source ~/.bashrc
 ```
 
 Further Instructions on how to setup and run the APIs are in the api-server folder itself.
