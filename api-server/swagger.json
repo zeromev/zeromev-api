@@ -12,7 +12,7 @@
   },
   "servers": [
     {
-      "url": "https://data.zeromev.org/v1"
+      "url": "/v1"
     }
   ],
   "tags": [
@@ -24,9 +24,7 @@
   "paths": {
     "/mevBlock": {
       "get": {
-        "tags": [
-          "public"
-        ],
+        "tags": ["public"],
         "summary": "returns MEV transactions for one or more blocks",
         "description": "returns all MEV related transactions for the passed block_number, or the number of blocks specified by count starting from block_number.",
         "operationId": "mevBlock",
@@ -83,9 +81,7 @@
     },
     "/mevTransactions": {
       "get": {
-        "tags": [
-          "public"
-        ],
+        "tags": ["public"],
         "summary": "returns MEV transactions by originating address",
         "description": "returns all MEV transactions originating from the passed Ethereum wallet address. Paginates every 1000 transactions.",
         "operationId": "mevTransactions",
@@ -139,9 +135,7 @@
     },
     "/mevTransactionsSummary": {
       "get": {
-        "tags": [
-          "public"
-        ],
+        "tags": ["public"],
         "summary": "returns an MEV summary for the originating address",
         "description": "returns a summary of MEV transactions originating from the passed Ethereum wallet address and split by MEV type.",
         "operationId": "mevTransactionsSummary",
@@ -183,11 +177,7 @@
   "components": {
     "schemas": {
       "mevTransaction": {
-        "required": [
-          "block_number",
-          "mev_type",
-          "tx_index"
-        ],
+        "required": ["block_number", "mev_type", "tx_index"],
         "type": "object",
         "properties": {
           "block_number": {
@@ -298,9 +288,7 @@
         }
       },
       "mevTransactionSummary": {
-        "required": [
-          "mev_type"
-        ],
+        "required": ["mev_type"],
         "type": "object",
         "properties": {
           "mev_type": {
